@@ -77,7 +77,7 @@ $AGM = new AGM()
       </div>
     </header>
 
-    <a href="https://github.com/KoffeinFlummi/AGM"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+    <a href="https://github.com/KoffeinFlummi/AGM"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
 
     <div id="content-wrapper">
       <div class="inner clearfix">
@@ -92,6 +92,13 @@ $AGM = new AGM()
           <?php
             $AGM->printDownloadButton()
           ?>
+
+          <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+            <input type="hidden" name="cmd" value="_s-xclick">
+            <input type="hidden" name="hosted_button_id" value="HPAXPTVCNLDZS">
+            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+            <img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
+          </form>
 
           <!--
           <a href="#" class="button">
@@ -120,7 +127,12 @@ $AGM = new AGM()
     
     <footer class="footer">
       <div class="inner">
-        <span>This page is being maintained by <a href="https://github.com/KoffeinFlummi">KoffeinFlummi</a> and based on the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+        <p>
+          This page is being maintained by <a href="https://github.com/KoffeinFlummi">KoffeinFlummi</a> and based on the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </p>
+        <p class="license">
+          The Authentic Gameplay Modification is released under the GNU General Public License 2. For more information check the <a href="https://raw.githubusercontent.com/KoffeinFlummi/AGM/master/LICENSE">license file</a> attached to the project.
+        </p>
       </div>
     </footer>
 
@@ -144,9 +156,9 @@ $AGM = new AGM()
       (function(window,document,undefined){
         $(window).scroll(function() {
           if ($(window).width() <= 767) {return 0;}
-          var yPosH = ($(window).scrollTop() / 1.2) - 15; 
+          var yPosH = ($(window).scrollTop() / 3) - 15; 
           var coordsH = '50% '+ yPosH + 'px';
-          var yPosF = ($(window).scrollTop() / 1.2) - 90; 
+          var yPosF = ($(window).scrollTop() / 3) - 90; 
           var coordsF = '50% '+ yPosF + 'px';
           $(".header").css({ backgroundPosition: coordsH });
           $(".footer").css({ backgroundPosition: coordsF });
