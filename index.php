@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL | E_STRICT);
 include "includes/Parsedown.php";
 
 class AGM {
@@ -10,7 +11,7 @@ class AGM {
   private function getGithubAPIContent ($url) {
     $ch = curl_init();
     curl_setopt($ch,CURLOPT_URL,$url);
-    curl_setopt($ch,CURLOPT_RETURNTRANSFER,1); 
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
     curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,1);
     curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
     curl_setopt($ch,CURLOPT_USERAGENT,'agm.koffeinflummi.de');
@@ -26,25 +27,54 @@ class AGM {
     $text = $parsedown->text($raw);
     echo substr($text, strpos($text, "\n")+1);
   }
-
+/*
+  I can't be bothered to deal with GH's API rate limiting, so I'll just scrape it.
   public function printDownloadButton () {
     $releasesURL = "https://api.github.com/repos/".$this->repoOwner."/".$this->repoName."/releases";
-    try {
-      $releasesData = json_decode($this->getGithubAPIContent($releasesURL));
-      $url = $releasesData[0]->{"html_url"};
-      $name = $releasesData[0]->{"name"};
-      $date = strtotime($releasesData[0]->{"published_at"});
-      $download = $releasesData[0]->{"assets"}[0]->{"browser_download_url"};
 
-      echo "<a href='".$download."' title='Download' class='button'>";
-      echo "<small>Download Latest</small>";
-      echo $name;
-      echo "</a>";
-      echo date("Y-m-d", $date)." &bull; <a href='".$url."'>Release Notes</a>";
-    } catch (Exception $e) {
-      echo "Error fetching release status:<br/>";
-      echo $e;
-    }
+    $releasesData = json_decode($this->getGithubAPIContent($releasesURL));
+    $url = $releasesData[0]->{"html_url"};
+    $name = $releasesData[0]->{"name"};
+    $date = strtotime($releasesData[0]->{"published_at"});
+    $download = $releasesData[0]->{"assets"}[0]->{"browser_download_url"};
+
+    echo "<a href='".$download."' title='Download' class='button'>";
+    echo "<small>Download Latest</small>";
+    echo $name;
+    echo "</a>";
+    echo date("Y-m-d", $date)." &bull; <a href='".$url."'>Release Notes</a>";
+  }*/
+
+  public function printDownloadButton () {
+    $releasesURL = "https://github.com/".$this->repoOwner."/".$this->repoName."/releases";
+    $releasesContent = file_get_contents($releasesURL);
+
+    // GET LINK
+    $matches = array();
+    preg_match("/a href=\"\/.*?\/.*?\/releases\/download\/.*?\/.*?\" rel=\"nofollow\" class=\"button primary\"/i", $releasesContent, $matches);
+    $download = array();
+    preg_match("/a href=\"(.*?)\"/i", $matches[0], $download);
+    $download = "https://github.com" + $download[1];
+
+    // GET NAME
+    $matches = array();
+    preg_match("/\<a href=\"\/.*?\/.*?\/releases\/tag\/.*?\"\>.*?\<\/a\>/i", $releasesContent, $matches);
+    $matches2 = array();
+    preg_match("/\<a href=\"(.*?)\"\>(.*?)\<\/a\>/i", $matches[0], $matches2);
+    $url = $matches2[1];
+    $name = $matches2[2];
+
+    // GET DATE
+    $date = array();
+    preg_match("/\<time datetime=\".*?\" is=\"relative-time\"\>(.*?)\<\/time\>/i", $releasesContent, $date);
+    $date = $date[1];
+
+    echo "<a href='".$download."' title='Download' class='button'>";
+    echo "<small>Download Latest</small>";
+    echo $name;
+    echo "</a>";
+    echo "Released on ".$date."<br />";
+    echo "<a href='".$url."'>Release Notes</a>";
   }
 }
 
@@ -90,7 +120,7 @@ $AGM = new AGM()
         <aside id="sidebar">
 
           <?php
-            $AGM->printDownloadButton()
+            $AGM->printDownloadButton();
           ?>
 
           <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
@@ -109,7 +139,7 @@ $AGM = new AGM()
             <small>Latest Beta</small>
             v 1.0.12
           </a>
-          
+
           <div class="sidenav-helper" style="width: 0; height: 0"></div>
           <ul class="sidenav">
             <li id="nav-philosophy"><a href="#philosophy">Philosphy</a></li>
@@ -121,10 +151,10 @@ $AGM = new AGM()
           -->
 
         </aside>
-      
+
       </div>
     </div>
-    
+
     <footer class="footer">
       <div class="inner">
         <p>
@@ -137,7 +167,7 @@ $AGM = new AGM()
     </footer>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-    
+
     <!--
     <script>
       // GOOGLE ANALYTICS
@@ -156,16 +186,16 @@ $AGM = new AGM()
       (function(window,document,undefined){
         $(window).scroll(function() {
           if ($(window).width() <= 767) {return 0;}
-          var yPosH = ($(window).scrollTop() / 3) - 15; 
+          var yPosH = ($(window).scrollTop() / 3) - 15;
           var coordsH = '50% '+ yPosH + 'px';
-          var yPosF = ($(window).scrollTop() / 3) - 90; 
+          var yPosF = ($(window).scrollTop() / 3) - 90;
           var coordsF = '50% '+ yPosF + 'px';
           $(".header").css({ backgroundPosition: coordsH });
           $(".footer").css({ backgroundPosition: coordsF });
         });
       })(this,this.document);
     </script>
-    
+
     <script>
       // SMOOTH ANCHOR LINKS
       (function(window,document,undefined){
@@ -177,14 +207,14 @@ $AGM = new AGM()
         });
       })(this,this.document);
     </script>
-    
+
     <script>
       // STICKY SIDE MENU
       (function(window,document,undefined){
         $(window).scroll(function() {
-          $el = $('.sidenav'); 
-          if ($(this).scrollTop() + 20 > $(".sidenav-helper").offset().top && $el.css('position') != 'fixed'){ 
-            $el.css({'position': 'fixed', 'top': '0px', 'margin-top': '20px'}); 
+          $el = $('.sidenav');
+          if ($(this).scrollTop() + 20 > $(".sidenav-helper").offset().top && $el.css('position') != 'fixed'){
+            $el.css({'position': 'fixed', 'top': '0px', 'margin-top': '20px'});
           } else {
             if ($(this).scrollTop() + 20 <= $(".sidenav-helper").offset().top && $el.css('position') == 'fixed') {
               $el.css({'position': 'relative', 'margin-top': '0'});
@@ -212,11 +242,11 @@ $AGM = new AGM()
             $("#nav-philosophy").addClass("active");
             return 0;
           }
-          
+
         });
       })(this,this.document);
     </script>
 
-  
+
   </body>
 </html>
