@@ -822,7 +822,10 @@ class CfgVehicles {
     draconicForceZCoef = 0.1;
     draconicTorqueXCoef = 0.58;
     draconicTorqueYCoef = 0.00013;
-    envelope[] = {0,0,0.75,2.4,3.6,3.8,3.7,3.2,2.2,1.7,0.9};
+    //envelope[] = {0,0,0.75,2.4,3.6,3.8,3.7,3.2,2.2,1.7,0.9};
+    //thrustCoef[] = {1,1.2,1.3,1.25,1.06,1.01,1,0.92,0.75,0.65,0.5,0.25,0};
+    //A10 must be able to start in Molos
+    envelope[] = {0.8,1.4,2.0,2.4,3.6,3.8,3.7,3.2,2.2,1.7,0.9};
     thrustCoef[] = {1,1.2,1.3,1.25,1.06,1.01,1,0.92,0.75,0.65,0.5,0.25,0};
     acceleration = 265;
     landingSpeed = 220;
