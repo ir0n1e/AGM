@@ -256,7 +256,7 @@ class CfgVehicles {
 
 	class LandVehicle;
 	class Car: LandVehicle {
-		AGM_Vehicle_Cargo = 4;
+		AGM_Vehicle_Cargo = 6;
 		class AGM_Actions {
 			MACRO_UNLOAD
 			MACRO_REFUEL
@@ -382,7 +382,7 @@ class CfgVehicles {
 	};
 	
 	class Truck_F: Car_F {
-		AGM_Vehicle_Cargo = 8;
+		AGM_Vehicle_Cargo = 14;
 		KEY_WHEEL_6X6_REAR
 		class HitPoints: HitPoints {	//	@todo
 			class HitLFWheel;
