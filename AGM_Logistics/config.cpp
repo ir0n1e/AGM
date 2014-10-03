@@ -251,7 +251,6 @@ class CfgVehicles {
 				priority = 2.1;
 			};
 			MACRO_CHECKFUEL
-			MACRO_PARADROP
 		};
 	};
 
@@ -589,6 +588,9 @@ class CfgVehicles {
 					icon = "\A3\ui_f\data\igui\cfg\actions\repair_ca.paa";
 				};
 			};
+		};
+		class AGM_SelfActions {
+			MACRO_PARADROP
 		};
 	};
 
