@@ -83,14 +83,14 @@ class Binarizer:
     destination_path = os.path.join(
       self.paths["moddir"], self.paths["modfolder"], "addons")
 
-    pbos = list(map(lambda x: x.lower(), 
+    pbos = list(map(lambda x: x.lower(),
       os.listdir(destination_path)))
-    projects = list(map(lambda x: x.lower(), 
+    projects = list(map(lambda x: x.lower(),
       os.listdir(os.path.dirname(self.scriptpath))))
 
     obsolete = []
     for pbo in pbos:
-      if not ".".join(pbo.split(".")[:-1]) in projects:
+      if not pbo.split(".")[0] in projects:
         obsolete.append(pbo)
 
     return obsolete
@@ -98,7 +98,7 @@ class Binarizer:
   def get_arma_path(self):
     try:
       reg = winreg.ConnectRegistry(None, winreg.HKEY_LOCAL_MACHINE)
-      key = winreg.OpenKey(reg, 
+      key = winreg.OpenKey(reg,
               r"SOFTWARE\Wow6432Node\bohemia interactive\arma 3")
       return winreg.EnumValue(key,1)[1]
     except:
@@ -107,7 +107,7 @@ class Binarizer:
   def get_armatools_path(self):
     try:
       reg = winreg.ConnectRegistry(None, winreg.HKEY_LOCAL_MACHINE)
-      key = winreg.OpenKey(reg, 
+      key = winreg.OpenKey(reg,
               r"SOFTWARE\Wow6432Node\bohemia interactive\addonbuilder")
       return os.path.dirname(winreg.EnumValue(key,0)[1])
     except:
@@ -184,6 +184,22 @@ class Binarizer:
     except:
       print("  FAILED to move {} to modfolder.".format(module_name))
 
+    if self.paths["privatekey"] != "":
+      if os.path.exists(packonlypath):
+        bisignlocation = os.path.join(os.path.dirname(self.scriptpath),
+          ".build")
+      else:
+        bisignlocation = os.path.join(tempfolder, PROJECTNAME)
+      bisignlocation = os.path.join(bisignlocation,
+        module_name+".pbo."+PROJECTNAME+".bisign")
+      try:
+        shutil.move(
+          bisignlocation,
+          os.path.join(destinationpath, module_name.lower()+".pbo."+PROJECTNAME.lower()+".bisign")
+          )
+      except:
+        print("  FAILED to move {}'s signature to modfolder.".format(module_name))
+
   def check_paths(self):
     assert self.paths["arma"] != ""
     assert self.paths["armatools"] != ""
@@ -223,7 +239,7 @@ class Binarizer:
     if len(newmodules) == 0:
       return 0
     else:
-      print("The following modules failed to binarize:")
+      print("\nThe following modules failed to binarize:")
       print(", ".join(newmodules))
       return len(newmodules)
 
@@ -256,7 +272,19 @@ def main():
 
   result = " {} / {} modules binarized. ".format(succeeded, attempted)
   print("")
-  print(result.center(79, "="))
+
+  try:
+    import colorama
+  except ImportError:
+    print(result.center(79, "="))
+  else:
+    colorama.init()
+    result = result.center(79, "=")
+    if succeeded == attempted:
+      result = "\33[32m" + result + "\33[39m"
+    else:
+      result = "\33[31m" + result + "\33[39m"
+    print(result)
 
   if getattr(sys, "frozen", False):
     input("\nPress any key to exit...\n")

@@ -570,6 +570,24 @@ class CfgVehicles {
       };
     };
   };
+  class AllVehicles;
+  class Ship: AllVehicles {
+    class AGM_Actions {
+      class AGM_Unload {
+        displayName = "$STR_AGM_Medical_Unload";
+        distance = 4;
+        condition = "return = false; {if (_x getVariable 'AGM_Unconscious') exitWith {return = true;};} foreach (crew AGM_Interaction_Target); return and vehicle player == player and !(AGM_Interaction_Target isKindOf 'Man')";
+        statement = "[AGM_Interaction_Target] call AGM_Medical_fnc_unloadPatients;";
+      };
+      class AGM_Load {
+        displayName = "$STR_AGM_Medical_Load";
+        distance = 4;
+        condition = "!(AGM_Interaction_Target isKindOf 'Man') and vehicle player == player and ((player getVariable 'AGM_Dragging') isKindOf 'Man' or (player getVariable 'AGM_Carrying') isKindOf 'Man') and AGM_Interaction_Target emptyPositions 'cargo' > 0";
+        statement = "[AGM_Interaction_Target] call AGM_Medical_fnc_loadIntoVehicle;";
+        exceptions[] = {"AGM_Medical_canTreat"};
+      };
+    };
+  };
 
   class Box_NATO_Support_F;
   class AGM_Box_Medical: Box_NATO_Support_F {
@@ -615,6 +633,12 @@ class CfgVehicles {
     isGlobal = 1;
     icon = "\AGM_Medical\UI\IconMedical_ca.paa";
     class Arguments {
+      class CoefDamage {
+        displayName = "Damage Coef.";
+        description = "Multiplier for the amount of damage received. Default: 1 (obviously)";
+        typeName = "NUMBER";
+        defaultValue = 1;
+      };
       class CoefBleeding {
         displayName = "Bleeding Speed Coef.";
         description = "Multiplier for the rate of bleeding. Default: 1 (obviously)";
@@ -746,7 +770,7 @@ class CfgVehicles {
         };
       };
       class EnableOverdosing {
-        displayName = "Enable Overdosing?"
+        displayName = "Enable Overdosing?";
         description = "Enable morphine overdoses? Default: Yes";
         typeName = "BOOL";
         class values {
@@ -917,6 +941,7 @@ class ImpactEffectsBlood {
 };
 
 class AGM_Parameters {
+  AGM_Medical_CoefDamage = 1.0;
   AGM_Medical_CoefBleeding = 1.0;
   AGM_Medical_CoefPain = 1.0;
   AGM_Medical_MaxUnconsciousnessTime = -1;
