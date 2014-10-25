@@ -4,9 +4,9 @@ class CfgPatches {
 		weapons[] = {"AGM_Altimeter"};
 		requiredVersion = 0.60;
 		requiredAddons[] = {AGM_Core};
-		version = "0.931";
-		versionStr = "0.931";
-		versionAr[] = {0,931,0};
+		version = "0.94";
+		versionStr = "0.94";
+		versionAr[] = {0,94,0};
 		author[] = {"Garth 'LH' de Wet"};
 	};
 };
@@ -48,5 +48,17 @@ class CfgWeapons {
 		descriptionShort = "$STR_AGM_Parachute_AltimeterDescription";
 		displayName = "$STR_AGM_Parachute_AltimeterDisplayName";
 		picture = "\AGM_Parachute\UI\watch_altimeter.paa";
+	};
+};
+
+class CfgVehicles {
+	class Box_NATO_Support_F;
+	class AGM_Box_Misc: Box_NATO_Support_F {
+		class TransportItems {
+			class _xx_AGM_Altimeter {
+				name = "AGM_Altimeter";
+				count = 6;
+			};
+		};
 	};
 };

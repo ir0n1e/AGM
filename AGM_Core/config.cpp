@@ -169,9 +169,9 @@ class CfgPatches {
       "extended_eventhandlers",
       "cba_extended_eventhandlers"
     };
-    version = "0.931";
-    versionStr = "0.931";
-    versionAr[] = {0,931,0};
+    version = "0.94";
+    versionStr = "0.94";
+    versionAr[] = {0,94,0};
     author[] = {"KoffeinFlummi"};
     authorUrl = "https://github.com/KoffeinFlummi/";
   };
@@ -268,7 +268,18 @@ class CfgFunctions {
   class AGM_Debug {
     class AGM_Debug {
       file = "AGM_Core\functions\Debug";
+      class getChildren;
+      class getDisplayConfigName;
+      class logControls;
+      class logDisplays;
       class showUser;
+    };
+  };
+  class AGM_CuratorFix {
+    class AGM_CuratorFix {
+      file = "AGM_Core\functions\CuratorFix";
+      class addUnloadEventhandler;
+      class fixCrateContent;
     };
   };
 };
@@ -378,7 +389,7 @@ class CfgVehicles {
 class CfgWeapons {
   class ItemCore;
   class AGM_ItemCore: ItemCore {
-    type = 4;
+    type = 4096;//4;
     detectRange = -1;
     simulation = "ItemMineDetector";
   };
@@ -439,7 +450,11 @@ class AGM_Rsc_Control_Base {
   h = 0;
 };
 
-class AGM_Core_canInteractConditions {};
+class AGM_Core_canInteractConditions {
+  class AGM_Core_notOnMap {
+    condition = "!visibleMap";
+  };
+};
 
 class AGM_Core_Options {
   class enableNumberHotkeys {
@@ -452,3 +467,12 @@ class AGM_Core_Options {
 #include <MenuConfig.hpp>
 #include <ProgressScreen.hpp>
 #include <HintConfig.hpp>
+
+/*
+class RscControlsGroupNoScrollbars; 
+class RscAttributeInventory: RscControlsGroupNoScrollbars {
+  onSetFocus = "[_this,""RscAttributeInventory"",'CuratorCommon'] call (uinamespace getvariable ""BIS_fnc_initCuratorAttribute""); _this select 0 call AGM_CuratorFix_fnc_addUnloadEventhandler;";
+};
+*/
+
+#include <PickupFix.hpp>

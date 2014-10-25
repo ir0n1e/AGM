@@ -144,6 +144,3 @@ if (!hasInterface) exitWith{};
     call AGM_Map_fnc_cancelDrawing;
   };
 };
-
-// handle newly set markers
-//[_this call AGM_Map_fnc_setMarker] call AGM_Core_fnc_addMapMarkerCreatedEventhandler;

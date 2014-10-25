@@ -47,4 +47,5 @@ _this spawn {
 	waitUntil {sleep 0.1; position _item select 2 < 1};
 	//_smoke = [] call _fnc_smoke; Smoke, yes or no
 	detach _item;
+
 };

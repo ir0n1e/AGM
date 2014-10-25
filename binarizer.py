@@ -40,7 +40,7 @@ class Binarizer:
     self.scriptpath = path
     self.modules = self.get_modules()
     self.paths = {}
-    self.paths["privatekey"] = ""
+    self.paths["privatekey"] = "D:\\tools\\cygwin\\home\\hammer\\keys\\nta_agm.biprivatekey"
     self.paths["arma"] = self.get_arma_path()
     self.paths["armatools"] = self.get_armatools_path()
     self.paths["moddir"] = self.get_arma_path()
@@ -185,17 +185,14 @@ class Binarizer:
       print("  FAILED to move {} to modfolder.".format(module_name))
 
     if self.paths["privatekey"] != "":
-      if os.path.exists(packonlypath):
-        bisignlocation = os.path.join(os.path.dirname(self.scriptpath),
-          ".build")
-      else:
-        bisignlocation = os.path.join(tempfolder, PROJECTNAME)
+      bisignlocation = os.path.join(os.path.dirname(self.scriptpath),
+        ".build")
       bisignlocation = os.path.join(bisignlocation,
         module_name+".pbo."+PROJECTNAME+".bisign")
       try:
         shutil.move(
           bisignlocation,
-          os.path.join(destinationpath, module_name.lower()+".pbo."+PROJECTNAME.lower()+".bisign")
+          os.path.join(destinationpath, module_name+".pbo."+PROJECTNAME+".bisign")
           )
       except:
         print("  FAILED to move {}'s signature to modfolder.".format(module_name))
