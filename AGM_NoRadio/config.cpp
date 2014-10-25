@@ -4,9 +4,9 @@ class CfgPatches {
     weapons[] = {};
     requiredVersion = 0.60;
     requiredAddons[] = {AGM_Core};
-    version = "0.931";
-    versionStr = "0.931";
-    versionAr[] = {0,931,0};
+    version = "0.94";
+    versionStr = "0.94";
+    versionAr[] = {0,94,0};
     author[] = {"commy2"};
     authorUrl = "https://github.com/commy2/";
   };
@@ -18,18 +18,29 @@ class Extended_PostInit_EventHandlers {
   };
 };
 
+class RadioProtocolBase {
+  class CuratorWaypointPlaced;
+  class CuratorWaypointPlacedAttack;
+  class CuratorObjectPlaced;
+  class curatorObjectDestroyed;
+  class curatorModuleCAS;
+};
+
 class CfgVoice {
   class Base;
   class ENG: Base {
-    protocol = "";
+    protocol = "RadioProtocolBase";
   };
   class ENGB: Base {
-    protocol = "";
+    protocol = "RadioProtocolBase";
+  };
+  class ENVR: Base {
+    protocol = "RadioProtocolBase";
   };
   class GRE: Base {
-    protocol = "";
+    protocol = "RadioProtocolBase";
   };
   class PER: Base {
-    protocol = "";
+    protocol = "RadioProtocolBase";
   };
 };

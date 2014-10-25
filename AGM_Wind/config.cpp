@@ -4,9 +4,9 @@ class CfgPatches {
     weapons[] = {"AGM_ItemKestrel"};
     requiredVersion = 0.60;
     requiredAddons[] = {AGM_Core, AGM_Interaction};
-    version = "0.931";
-    versionStr = "0.931";
-    versionAr[] = {0,931,0};
+    version = "0.94";
+    versionStr = "0.94";
+    versionAr[] = {0,94,0};
     author[] = {"Falke", "commy2", "KoffeinFlummi", "CAA-Picard"};
     authorUrl = "https://github.com/KoffeinFlummi/";
   };
@@ -130,7 +130,7 @@ class CfgAmmo {
   };
   class B_127x99_SLAP : B_127x99_Ball {
     AGM_Bullet_Dispersion = 0.017;
-  }
+  };
 };
 
 class RscText;

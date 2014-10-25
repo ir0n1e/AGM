@@ -4,9 +4,9 @@ class CfgPatches {
     weapons[] = {};
     requiredVersion = 0.60;
     requiredAddons[] = {AGM_Core};
-    version = "0.931";
-    versionStr = "0.931";
-    versionAr[] = {0,931,0};
+    version = "0.94";
+    versionStr = "0.94";
+    versionAr[] = {0,94,0};
     author[] = {"commy2", "KoffeinFlummi"};
     authorUrl = "https://github.com/KoffeinFlummi/";
   };
@@ -25,8 +25,8 @@ class CfgFunctions {
 class AGM_Core_Default_Keys {
   class speedLimiter {
     displayName = "$STR_AGM_SpeedLimiter";
-    condition = "player == driver _vehicle && {_vehicle isKindOf 'Car' || {_vehicle isKindOf 'Tank'}}";
-    statement = "[_vehicle] call AGM_Vehicles_fnc_speedLimiter";
+    condition = "_player == driver _vehicle && {_vehicle isKindOf 'Car' || {_vehicle isKindOf 'Tank'}}";
+    statement = "[_player, _vehicle] call AGM_Vehicles_fnc_speedLimiter";
     key = 211;
     shift = 0;
     control = 0;

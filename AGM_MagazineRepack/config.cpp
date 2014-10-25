@@ -4,9 +4,9 @@ class CfgPatches {
     weapons[] = {};
     requiredVersion = 0.60;
     requiredAddons[] = {AGM_Core, AGM_Interaction};
-    version = "0.931";
-    versionStr = "0.931";
-    versionAr[] = {0,931,0};
+    version = "0.94";
+    versionStr = "0.94";
+    versionAr[] = {0,94,0};
     author[] = {"commy2", "CAA-Picard"};
     authorUrl = "https://github.com/commy2/";
   };
@@ -35,7 +35,7 @@ class CfgVehicles {
         showDisabled = 0;
         priority = -2;
         icon = "AGM_MagazineRepack\UI\repack_ca.paa";
-        hotkey = "M";
+        hotkey = "R";
       };
     };
   };

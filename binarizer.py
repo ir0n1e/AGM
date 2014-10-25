@@ -40,7 +40,7 @@ class Binarizer:
     self.scriptpath = path
     self.modules = self.get_modules()
     self.paths = {}
-    self.paths["privatekey"] = ""
+    self.paths["privatekey"] = "D:\\tools\\cygwin\\home\\hammer\\keys\\nta_agm.biprivatekey"
     self.paths["arma"] = self.get_arma_path()
     self.paths["armatools"] = self.get_armatools_path()
     self.paths["moddir"] = self.get_arma_path()
@@ -83,9 +83,9 @@ class Binarizer:
     destination_path = os.path.join(
       self.paths["moddir"], self.paths["modfolder"], "addons")
 
-    pbos = list(map(lambda x: x.lower(), 
+    pbos = list(map(lambda x: x.lower(),
       os.listdir(destination_path)))
-    projects = list(map(lambda x: x.lower(), 
+    projects = list(map(lambda x: x.lower(),
       os.listdir(os.path.dirname(self.scriptpath))))
 
     obsolete = []
@@ -98,7 +98,7 @@ class Binarizer:
   def get_arma_path(self):
     try:
       reg = winreg.ConnectRegistry(None, winreg.HKEY_LOCAL_MACHINE)
-      key = winreg.OpenKey(reg, 
+      key = winreg.OpenKey(reg,
               r"SOFTWARE\Wow6432Node\bohemia interactive\arma 3")
       return winreg.EnumValue(key,1)[1]
     except:
@@ -107,7 +107,7 @@ class Binarizer:
   def get_armatools_path(self):
     try:
       reg = winreg.ConnectRegistry(None, winreg.HKEY_LOCAL_MACHINE)
-      key = winreg.OpenKey(reg, 
+      key = winreg.OpenKey(reg,
               r"SOFTWARE\Wow6432Node\bohemia interactive\addonbuilder")
       return os.path.dirname(winreg.EnumValue(key,0)[1])
     except:
@@ -185,17 +185,14 @@ class Binarizer:
       print("  FAILED to move {} to modfolder.".format(module_name))
 
     if self.paths["privatekey"] != "":
-      if os.path.exists(packonlypath):
-        bisignlocation = os.path.join(os.path.dirname(self.scriptpath),
-          ".build")
-      else:
-        bisignlocation = os.path.join(tempfolder, PROJECTNAME)
+      bisignlocation = os.path.join(os.path.dirname(self.scriptpath),
+        ".build")
       bisignlocation = os.path.join(bisignlocation,
         module_name+".pbo."+PROJECTNAME+".bisign")
       try:
         shutil.move(
           bisignlocation,
-          os.path.join(destinationpath, module_name.lower()+".pbo."+PROJECTNAME.lower()+".bisign")
+          os.path.join(destinationpath, module_name+".pbo."+PROJECTNAME+".bisign")
           )
       except:
         print("  FAILED to move {}'s signature to modfolder.".format(module_name))
@@ -272,7 +269,19 @@ def main():
 
   result = " {} / {} modules binarized. ".format(succeeded, attempted)
   print("")
-  print(result.center(79, "="))
+
+  try:
+    import colorama
+  except ImportError:
+    print(result.center(79, "="))
+  else:
+    colorama.init()
+    result = result.center(79, "=")
+    if succeeded == attempted:
+      result = "\33[32m" + result + "\33[39m"
+    else:
+      result = "\33[31m" + result + "\33[39m"
+    print(result)
 
   if getattr(sys, "frozen", False):
     input("\nPress any key to exit...\n")

@@ -4,9 +4,9 @@ class CfgPatches {
 		weapons[] = {"AGM_Altimeter"};
 		requiredVersion = 0.60;
 		requiredAddons[] = {AGM_Core};
-		version = "0.931";
-		versionStr = "0.931";
-		versionAr[] = {0,931,0};
+		version = "0.94";
+		versionStr = "0.94";
+		versionAr[] = {0,94,0};
 		author[] = {"Garth 'LH' de Wet"};
 	};
 };
@@ -32,9 +32,9 @@ class AGM_Core_Default_Keys {
 		conditionUp = "true";
 		statementUp = "call AGM_Parachute_fnc_hideAltimeter;";
 		exceptions[] = {"AGM_Drag_isNotDragging", "AGM_Medical_canTreat", "AGM_Interaction_isNotEscorting"};
-		key = 20;
+		key = 35;
 		shift = 0;
-		control = 0;
+		control = 1;
 		alt = 0;
 	};
 };
@@ -48,5 +48,17 @@ class CfgWeapons {
 		descriptionShort = "$STR_AGM_Parachute_AltimeterDescription";
 		displayName = "$STR_AGM_Parachute_AltimeterDisplayName";
 		picture = "\AGM_Parachute\UI\watch_altimeter.paa";
+	};
+};
+
+class CfgVehicles {
+	class Box_NATO_Support_F;
+	class AGM_Box_Misc: Box_NATO_Support_F {
+		class TransportItems {
+			class _xx_AGM_Altimeter {
+				name = "AGM_Altimeter";
+				count = 6;
+			};
+		};
 	};
 };

@@ -4,9 +4,9 @@ class CfgPatches {
     weapons[] = {};
     requiredVersion = 0.60;
     requiredAddons[] = {AGM_Core};
-    version = "0.931";
-    versionStr = "0.931";
-    versionAr[] = {0,931,0};
+    version = "0.94";
+    versionStr = "0.94";
+    versionAr[] = {0,94,0};
     author[] = {"commy2", "KoffeinFlummi"};
     authorUrl = "https://github.com/commy2/";
   };
@@ -42,10 +42,10 @@ class AGM_Core_Default_Keys {
     displayName = "$STR_AGM_Grenades_SwitchGrenadeMode";
     condition = "player == vehicle player";
     statement = "call AGM_Grenades_fnc_nextMode";
-    key = 34;
+    key = 9;//34;
     shift = 0;
     control = 0;
-    alt = 1;
+    alt = 0;//1;
   };
 };
 
