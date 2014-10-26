@@ -1,7 +1,7 @@
 //marc_book, commy2, Ir0n1E
+
 // We have to spawn this function (waitUntil and sleep construction)
 _this spawn {
-	private ["_vehicle", "_fnc_smoke", "_fnc_light", "_items", "_count", "_item", "_position", "_parachute", "_smoke", "_light"];
 
 	_vehicle = _this select 0;
 
@@ -21,15 +21,16 @@ _this spawn {
 	_items = _items - [_item];
 
 	_vehicle setVariable ["AGM_Logistics_loadedItems", _items, true];
-	_position = ((vectorDir _vehicle) vectorMultiply -15) vectorAdd getPos _vehicle;
+	_position = ((vectorDir _vehicle) vectorMultiply -15) vectorAdd getPosASL _vehicle;
 
 	detach _item;
 
 	//Ramdom Parachute Positions - Like MCC Parachute
 	_dir = (direction _vehicle) + (random 180);
-	_item setPos _position;
+	_item setPosASL _position;
+	sleep 0.7;
 	_item setDir ((_dir)-5+(random 10));
-	_parachute = createVehicle ["B_Parachute_02_F", position _item, [], 0, 'NONE'];
+	_parachute = createVehicle ["B_Parachute_02_F", getpos _item, [], 0, "CAN_COLLIDE"];
 
 	_parachute setPos (getPos _item);
 	_parachute setDir ((_dir)-5+(random 10));
@@ -47,4 +48,5 @@ _this spawn {
 	waitUntil {sleep 0.1; position _item select 2 < 1};
 	//_smoke = [] call _fnc_smoke; Smoke, yes or no
 	detach _item;
+
 };
