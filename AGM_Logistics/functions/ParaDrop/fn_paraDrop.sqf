@@ -21,15 +21,16 @@ _this spawn {
 	_items = _items - [_item];
 
 	_vehicle setVariable ["AGM_Logistics_loadedItems", _items, true];
-	_position = ((vectorDir _vehicle) vectorMultiply -15) vectorAdd getPos _vehicle;
+	_position = ((vectorDir _vehicle) vectorMultiply -15) vectorAdd getPosASL _vehicle;
 
 	detach _item;
 
 	//Ramdom Parachute Positions - Like MCC Parachute
 	_dir = (direction _vehicle) + (random 180);
-	_item setPos _position;
+	_item setPosASL _position;
+	sleep 0.7;
 	_item setDir ((_dir)-5+(random 10));
-	_parachute = createVehicle ["B_Parachute_02_F", position _item, [], 0, 'NONE'];
+	_parachute = createVehicle ["B_Parachute_02_F", getpos _item, [], 0, "CAN_COLLIDE"];
 
 	_parachute setPos (getPos _item);
 	_parachute setDir ((_dir)-5+(random 10));
